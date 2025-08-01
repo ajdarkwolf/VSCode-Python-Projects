@@ -3,8 +3,12 @@ import pygame
 import os.path
 from sys import exit
 
+# reduces latency
+pygame.mixer.pre_init(frequency=44100, size=-16, channels=2, buffer=64)
+
 # starts the game and initializes the mixer/music player, clock, and screen
 pygame.init()
+pygame.mixer.set_num_channels(32)
 pygame.midi.init()
 screen = pygame.display.set_mode((800,400))
 mixer = pygame.mixer.init()
@@ -44,9 +48,7 @@ while True:
             print("Quitting...")
             pygame.quit()
             exit()
-
-    if event.type == pygame.KEYDOWN:
-        if event.key == pygame.K_ESCAPE:
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             print("Quitting...")
             pygame.quit()
             exit()
@@ -54,15 +56,16 @@ while True:
 
     # play sounds from midi device
     if midi_input.poll():
-        events = midi_input.read(10)
-        for evt in events:
+        midi_events = midi_input.read(10)
+        for evt in midi_events:
             data = evt[0]
             status, note, velocity, _ = data
+
             if status == 144 and velocity > 0:
-                if 60 <= note <= 72:
+                if note in sounds:
                     sounds[note].play()
-                else:
-                    pass
+            if status == 128:
+                sounds[note].stop()
             
 
     # updates display and unlocks framerate
