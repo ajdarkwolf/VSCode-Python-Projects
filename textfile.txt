@@ -13,7 +13,7 @@ mixer = pygame.mixer.init()
 clock = pygame.time.Clock()
 
 # list of all the notes, to be expanded
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) 
 sounds = {60: pygame.mixer.Sound(os.path.join(BASE_DIR, "SFX", "Piano.mf.C4.aiff")),
           61: pygame.mixer.Sound(os.path.join(BASE_DIR, "SFX", "Piano.mf.Db4.aiff")),
           62: pygame.mixer.Sound(os.path.join(BASE_DIR, "SFX", "Piano.mf.D4.aiff")),
@@ -73,7 +73,7 @@ while True:
 
 This code somewhat works. I have the window set up for future use, but it is currently just a black screen.
 I'm mainly focused on the audio right now. Your code is a good start, but there are a couple major
-problems with it that need to be resolved. Firstly, the audio is consistently delayed after you press the key.
+problems with it that need to be resolved fast. Firstly, the audio is consistently delayed after you press the key.
 I would imagie this is a simple fix. The second and worse issue is that after a few seconds of using the 
 program and playing a few notes, it stops playing notes. I'm not quite sure whether it stops registering inputs
 or if it stops playing the notes, but it definitely needs a fix. 
